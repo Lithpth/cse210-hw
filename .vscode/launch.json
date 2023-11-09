@@ -24,7 +24,7 @@
             "program": "${workspaceFolder}/csharp-prep/Prep1/bin/Debug/net7.0/Prep1.dll",
             "args": [],
             "cwd": "${workspaceFolder}/csharp-prep/Prep1",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
         },
