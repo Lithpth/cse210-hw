@@ -63,7 +63,7 @@
             "program": "${workspaceFolder}/csharp-prep/Prep4/bin/Debug/net7.0/Prep4.dll",
             "args": [],
             "cwd": "${workspaceFolder}/csharp-prep/Prep4",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
         },
@@ -76,7 +76,7 @@
             "program": "${workspaceFolder}/csharp-prep/Prep5/bin/Debug/net7.0/Prep5.dll",
             "args": [],
             "cwd": "${workspaceFolder}/csharp-prep/Prep5",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
         },
@@ -89,7 +89,7 @@
             "program": "${workspaceFolder}/prepare/Learning02/bin/Debug/net7.0/Learning02.dll",
             "args": [],
             "cwd": "${workspaceFolder}/prepare/Learning02",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
         },
@@ -102,7 +102,7 @@
             "program": "${workspaceFolder}/prepare/Learning03/bin/Debug/net7.0/Learning03.dll",
             "args": [],
             "cwd": "${workspaceFolder}/prepare/Learning03",
-            "console": "integratedTerminal",
+            "console": "externalTerminal",
             "internalConsoleOptions": "neverOpen",
             "stopAtEntry": false
         },
