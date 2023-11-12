@@ -5,7 +5,7 @@ class Program
     static void Main(string[] args)
     {
         // Console.WriteLine("Hello Prep3 World!");
-        int num1,guess=0,n=0;
+        int num1,guess=0;
 
         int guesses=0;
 
