@@ -8,7 +8,7 @@ public class Program
         Console.WriteLine("Hello, World!");
         float initialBalance = 143.5f;
         float initialAssetAmount = 0f;
-        MarketBuy marketBuy = new MarketBuy("Asset", 100.14f,initialBalance, initialAssetAmount);
+        MarketBuy marketBuy = new MarketBuy("Asset", 100.14f, initialBalance, initialAssetAmount);
         MarketSell marketSell = new MarketSell("Asset", 100.14f, initialBalance, initialAssetAmount);
         LimitBuy limitBuy = new LimitBuy("Asset", initialBalance, initialAssetAmount);
         LimitSell limitSell = new LimitSell("Asset", initialBalance, initialAssetAmount);
@@ -83,7 +83,7 @@ public class MarketBuy : Order
 
         // show user total balance before 
         // show user the price of the asset and total balance of the asset
-        Console.WriteLine("Buy at market price: {0}",_price);
+        Console.WriteLine("Buy at market price: {0}", _price);
         float amount = float.Parse(Console.ReadLine());
         _balance -= amount * _price;
         _assetAmount += amount;
@@ -94,7 +94,7 @@ public class MarketBuy : Order
 }
 public class MarketSell : Order
 {
-    public MarketSell(string assetName, float price,float balance, float assetAmount)
+    public MarketSell(string assetName, float price, float balance, float assetAmount)
         : base(assetName, 2, balance, assetAmount)
     {
     }
