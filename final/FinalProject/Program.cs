@@ -1,147 +1,196 @@
 using System;
 
 
-    public class Program
+public class Program
+{
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
+        Console.WriteLine("Hello, World!");
+        float initialBalance = 143.5f;
+        float initialAssetAmount = 0f;
+        MarketBuy marketBuy = new MarketBuy("Asset", 100.14f,initialBalance, initialAssetAmount);
+        MarketSell marketSell = new MarketSell("Asset", 100.14f, initialBalance, initialAssetAmount);
+        LimitBuy limitBuy = new LimitBuy("Asset", initialBalance, initialAssetAmount);
+        LimitSell limitSell = new LimitSell("Asset", initialBalance, initialAssetAmount);
 
-            MarketBuy marketBuy = new MarketBuy("r",11.14f,140f,"buy");
-
-            // Temporary
-            marketBuy.GetOrder(150);
-            Console.ReadLine();
-        }
+        marketBuy.GetOrder();
+        marketSell.GetOrder();
+        limitBuy.GetOrder();
+        limitSell.GetOrder();
+        Console.ReadLine();
     }
-    public abstract class Order
+}
+public abstract class Order
+{
+    private int _id;
+    private string _assetName;
+    protected float _balance;
+    protected float _assetAmount;
+    protected float _price;
+
+
+    public Order(string assetName, int id, float balance = 143.5f, float assetAmount = 0f, float price = 100.14f)
     {
-        private int _id;
-        private string _assetName;
-        private string _orderType;
-        public float _balance;
-
-        public Order(string assetName, string orderType, int id, float balance = 143.5f)
-        {
-            _assetName = assetName;
-            _orderType = orderType;
-            _balance = balance;
-
-        }
-
-        protected Order(string assetName)
-        {
-        }
-
-        // Id
-        public int GetId()
-        {
-            return _id;
-        }
-        public void SetId(int id)
-        {
-            _id = id;
-        }
-        // Name
-        public string GetAssetName()
-        {
-            return _assetName;
-        }
-        public void SetAssetName(string assetName)
-        {
-            _assetName = assetName;
-        }
-        public string GetOrderType()
-        {
-            return _orderType;
-        }
-        public void SetOrderType(string orderType)
-        {
-            _orderType = orderType;
-        }
-        //whether it be buy or sell
-        public abstract void GetOrder(float balance);
+        _id = id;
+        _assetName = assetName;
+        _balance = balance;
+        _assetAmount = assetAmount;
+        _price = price;
     }
-    public class MarketBuy : Order
+
+
+    // Id
+    public int GetId()
     {
-        private float _price;
-        // this is an
-        // MarketBuy(buy
-        public MarketBuy(string assetName, float price, float balance, string orderType) : base (assetName)
-        {
-            _price = price;
-            _balance = balance;
+        return _id;
+    }
+    public void SetId(int id)
+    {
+        _id = id;
+    }
+    // Name
+    public string GetAssetName()
+    {
+        return _assetName;
+    }
+    public void SetAssetName(string assetName)
+    {
+        _assetName = assetName;
+    }
 
-        }
-        public float GetPrice()
-        {
-            return _price;
-        }
-        public void SetPrice(float price)
-        {
-            _price = price;
-        }
-        public override void GetOrder(float balance)
-        {
-            // do the function of how many you can buy at a price
+    public float GetPrice()
+    {
+        return _price;
+    }
+    public void SetPrice(float price)
+    {
+        _price = price;
+    }
+    //whether it be buy or sell
+    public abstract void GetOrder();
+}
+public class MarketBuy : Order
+{
+    // this is an
+    // MarketBuy(buy
+    public MarketBuy(string assetName, float price, float balance, float assetAmount)
+        : base(assetName, 1, balance, assetAmount)
+    {
+    }
+    public override void GetOrder()
+    {
+        // do the function of how many you can buy at a price
 
-            // show user total balance before 
-            // show user the price of the asset and total balance of the asset
-            Console.WriteLine("Amount you'd like to buy: ");
+        // show user total balance before 
+        // show user the price of the asset and total balance of the asset
+        Console.WriteLine("Buy at market price: {0}",_price);
+        float amount = float.Parse(Console.ReadLine());
+        _balance -= amount * _price;
+        _assetAmount += amount;
+
+        Console.WriteLine("New Balance: {0}", _balance);
+        Console.WriteLine("New Asset Amount: {0}", _assetAmount);
+    }
+}
+public class MarketSell : Order
+{
+    public MarketSell(string assetName, float price,float balance, float assetAmount)
+        : base(assetName, 2, balance, assetAmount)
+    {
+    }
+    public override void GetOrder()
+    {
+        Console.WriteLine("Sell at market price: {0}", _price);
+        float amount = float.Parse(Console.ReadLine());
+        _balance -= amount * _price;
+        _assetAmount += amount;
+
+        Console.WriteLine("New Balance: {0}", _balance);
+        Console.WriteLine("New Asset Amount: {0}", _assetAmount);
+    }
+}
+public class LimitBuy : Order
+{
+    private float _limitPrice;
+    public float GetLimitPrice()
+    {
+        return _limitPrice;
+    }
+    public void SetLimitPrice(float limitPrice)
+    {
+        _limitPrice = limitPrice;
+    }
+    public LimitBuy(string assetName, float balance, float assetAmount)
+        : base(assetName, 3, balance, assetAmount)
+    {
+    }
+    public override void GetOrder()
+    {
+        Console.WriteLine("Enter limit price");
+        float userLimitPrice = float.Parse(Console.ReadLine());
+        if (userLimitPrice >= _price)
+        {
+            Console.WriteLine("Limit price is greater than market price.");
+            Console.WriteLine("Ordering at market price: {0}", _price);
+            Console.WriteLine("New Balance: {0}", _balance);
+            Console.WriteLine("New Asset Amount: {0}", _assetAmount);
+        }
+        else
+        {
+            Console.WriteLine();
+            Console.WriteLine("Limit Buy", _price);
             float amount = float.Parse(Console.ReadLine());
-            balance = _balance - amount;
-            Console.WriteLine(balance);
+
+            Console.WriteLine("New Balance: {0}", _balance);
+            Console.WriteLine("New Asset Amount: {0}", _assetAmount);
         }
     }
-    public class MarketSell : Order
+
+    public static implicit operator LimitBuy(MarketSell v)
     {
-        public MarketSell(string assetName, string orderType, int id, float balance = 143.5F) : base(assetName, orderType, id, balance)
-        {
-        }
-        public override void GetOrder(float balance)
-        {
-            // do the function of how many you can buy at a price
-
-            // show user total balance before 
-            // show user the price of the asset and total balance of the asset
-            Console.WriteLine("Amount you'd like to buy: ");
-            float amount = float.Parse(Console.ReadLine());
-            balance = _balance + amount;
-            Console.WriteLine(balance);
-        }
+        throw new NotImplementedException();
     }
-    public class LimitBuy : Order
+}
+public class LimitSell : Order
+{
+    private float _limitPrice;
+    public float GetLimitPrice()
     {
-        public LimitBuy(string assetName, string orderType, int id, float balance = 143.5F) : base(assetName, orderType, id, balance)
-        {
-        }
-        public override void GetOrder(float balance)
-        {
-            // do the function of how many you can buy at a price
-
-            // show user total balance before 
-            // show user the price of the asset and total balance of the asset
-            Console.WriteLine("Amount you'd like to buy: ");
-            float amount = float.Parse(Console.ReadLine());
-            balance = _balance - amount;
-            Console.WriteLine(balance);
-        }
+        return _limitPrice;
     }
-    public class LimitSell : Order
+    public void SetLimitPrice(float limitPrice)
     {
-        public LimitSell(string assetName, string orderType, int id, float balance = 143.5F) : base(assetName, orderType, id, balance)
-        {
-        }
-        public override void GetOrder(float balance)
-        {
-            // do the function of how many you can buy at a price
-
-            // show user total balance before 
-            // show user the price of the asset and total balance of the asset
-            Console.WriteLine("Amount you'd like to sell: ");
-            float amount = float.Parse(Console.ReadLine());
-            balance = _balance + amount;
-            Console.WriteLine(balance);
-        }
-
+        _limitPrice = limitPrice;
     }
+    public LimitSell(string assetName, float balance, float assetAmount)
+        : base(assetName, 3, balance, assetAmount)
+    {
+    }
+    public override void GetOrder()
+    {
+        // do the function of how many you can buy at a price
+
+        // show user total balance before 
+        // show user the price of the asset and total balance of the asset
+
+        Console.WriteLine("Enter limit price");
+        float userLimitPrice = float.Parse(Console.ReadLine());
+        if (userLimitPrice <= _price)
+        {
+            Console.WriteLine("Limit price is less than market price.");
+            Console.WriteLine("Ordering at market price: {0}", _price);
+            Console.WriteLine("New Balance: {0}", _balance);
+            Console.WriteLine("New Asset Amount: {0}", _assetAmount);
+        }
+        else
+        {
+            Console.WriteLine();
+            Console.WriteLine("Limit Sell: {0}", _price);
+            float amount = float.Parse(Console.ReadLine());
+
+            Console.WriteLine("New Balance: {0}", _balance);
+            Console.WriteLine("New Asset Amount: {0}", _assetAmount);
+        }
+    }
+
+}
